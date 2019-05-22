@@ -1,4 +1,6 @@
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ function coop:remove_level_object
+execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard players tag @a remove wantToRestart
+execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard players tag @a remove wantToLeave
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard teams join player @a
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard teams join helper @r
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard teams option helper color light_purple
@@ -31,6 +33,9 @@ execute @e[tag=gameMaster,score_currentLevel_min=1,score_currentLevel=1,score_st
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ execute @a ~ ~ ~ playsound entity.evocation_illager.prepare_summon voice @s ~ ~ ~ 50 1.5
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ execute @a ~ ~ ~ spawnpoint @s ~ ~ ~
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ execute @r[team=player] ~ ~ ~ summon armor_stand ~ ~ ~ {Tags:["levelSpawn","levelObject"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
+execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ execute @r[team=player] ~ ~ ~ summon armor_stand ~ ~ ~ {Tags:["levelSpawn","levelObject"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
+execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ replaceitem entity @a slot.hotbar.7 structure_void 1 0 {display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}
+execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ replaceitem entity @a slot.hotbar.8 barrier 1 0 {display:{Name:"§c§lロビーへ戻る§7 (Fキー)"}}
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ setblock ~ ~-1 ~-15 wool 14
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ setblock ~2 ~-1 ~-15 wool 11
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ setblock ~4 ~-1 ~-15 wool 4

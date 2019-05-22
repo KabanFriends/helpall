@@ -81,3 +81,33 @@ execute @e[tag=gameMaster,score_gameMaster=0,score_clearTimer_min=105] ~ ~ ~ sco
 
 execute @e[tag=gameMaster,score_startTimer_min=1] ~ ~ ~ function coop:load_level
 scoreboard players add @e[tag=gameMaster,score_startTimer_min=1] startTimer 1
+
+scoreboard players set @a holdItem 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players set @a holdItem 1 {Inventory:[{Slot:-106b,id:"minecraft:structure_void",tag:{display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}}]}
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players set @a holdItem 2 {Inventory:[{Slot:-106b,id:"minecraft:barrier",tag:{display:{Name:"§c§lロビーへ戻る§7 (Fキー)"}}}]}
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players tag @a[score_holdItem_min=1,score_holdItem=1] add wantToRestart
+scoreboard players set @e[tag=gameMaster] wantRestartCount 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[tag=wantToRestart] ~ ~ ~ scoreboard players add @e[tag=gameMaster] wantRestartCount 1
+scoreboard players operation @e[tag=gameMaster] restartOperation = @e[tag=gameMaster] wantRestartCount
+scoreboard players operation @e[tag=gameMaster] restartOperation -= @e[tag=gameMaster] players
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantRestartCount_min=1,score_wantRestartCount=1] ~ ~ ~ execute @a[score_holdItem_min=1,score_holdItem=1] ~ ~ ~ execute @a ~ ~ ~ playsound block.note.pling voice @s ~ ~ ~ 50 2
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantRestartCount_min=1,score_wantRestartCount=1] ~ ~ ~ execute @a[score_holdItem_min=1,score_holdItem=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがステージをやり直そうとしています。 やり直したい人は、「"},{"text":"ステージをやり直す","color":"dark_aqua"},{"text":"」のアイテムを使用してください。"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantRestartCount_min=2] ~ ~ ~ execute @a[score_holdItem_min=1,score_holdItem=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがステージのやり直しに同意しました。"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_restartOperation_min=0] ~ ~ ~ execute @a[score_holdItem_min=1,score_holdItem=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がステージのやり直しに同意したので、ステージをやり直します。","bold":"true","color":"green"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_restartOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToRestart
+scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_restartOperation_min=0] startTimer 1
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players tag @a[score_holdItem_min=2,score_holdItem=2] add wantToLeave
+scoreboard players set @e[tag=gameMaster] wantLeaveCount 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[tag=wantToLeave] ~ ~ ~ scoreboard players add @e[tag=gameMaster] wantLeaveCount 1
+scoreboard players operation @e[tag=gameMaster] leaveOperation = @e[tag=gameMaster] wantLeaveCount
+scoreboard players operation @e[tag=gameMaster] leaveOperation -= @e[tag=gameMaster] players
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveCount_min=1,score_wantLeaveCount=1] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ execute @a ~ ~ ~ playsound block.note.pling voice @s ~ ~ ~ 50 2
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveCount_min=1,score_wantLeaveCount=1] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがロビーへ移動しようとしています。 ロビーへ戻りたい人は、「"},{"text":"ロビーへ戻る","color":"red"},{"text":"」のアイテムを使用してください。"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveCount_min=2] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがロビーへの移動に同意しました。"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がロビーへの移動に同意したので、ロビーへ戻ります。","bold":"true","color":"green"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToLeave
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard teams join lobby @a
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ tp @a 500 10 0 0 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ clear @a
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[score_holdItem_min=1] slot.weapon.offhand air
+scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] gameType 0
