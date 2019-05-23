@@ -1,0 +1,1 @@
+scoreboard players tag @e[tag=gameMaster] add bluetriggered

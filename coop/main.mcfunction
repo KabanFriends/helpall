@@ -51,11 +51,19 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @
 execute @e[tag=button] ~ ~ ~ detect ~ ~-1 ~ stone_pressure_plate 0 kill @s
 scoreboard players set @e[tag=buttontrigger] triggered 0
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=yellowbutton] ~ ~ ~ scoreboard players set @e[tag=yellowtrigger] triggered 1
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=yellowtriggered] ~ ~ ~ scoreboard players set @e[tag=yellowtrigger] triggered 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=greenbutton] ~ ~ ~ scoreboard players set @e[tag=greentrigger] triggered 1
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=greentriggered] ~ ~ ~ scoreboard players set @e[tag=greentrigger] triggered 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=bluebutton] ~ ~ ~ scoreboard players set @e[tag=bluetrigger] triggered 1
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=bluetriggered] ~ ~ ~ scoreboard players set @e[tag=bluetrigger] triggered 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=redbutton] ~ ~ ~ scoreboard players set @e[tag=redtrigger] triggered 1
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=redtriggered] ~ ~ ~ scoreboard players set @e[tag=redtrigger] triggered 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[score_triggered=0] ~ ~ ~ detect ~ ~ ~ redstone_block -1 setblock ~ ~ ~ air
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=buttontrigger,score_triggered_min=1] ~ ~ ~ detect ~ ~ ~ air -1 setblock ~ ~ ~ redstone_block
+scoreboard players tag @e[tag=gameMaster] remove redtriggered
+scoreboard players tag @e[tag=gameMaster] remove bluetriggered
+scoreboard players tag @e[tag=gameMaster] remove yellowtriggered
+scoreboard players tag @e[tag=gameMaster] remove greentriggered
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players set @a[tag=notOnButton] onButton 0
 
 execute @e[tag=gameMaster,score_startTimer_min=1] ~ ~ ~ function coop:load_level
@@ -98,11 +106,11 @@ execute @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] ~ ~ ~ clear
 execute @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] ~ ~ ~ function coop:remove_level_object
 execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ execute @a ~ ~ ~ playsound ui.toast.challenge_complete voice @s ~ ~ ~ 20 1.9
 execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ title @a title [{"text":""},{"text":"ステージ クリア！","color":"green","bold":"true"}]
-execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ scoreboard teams join lobby @a
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a[team=helper] 500 10 0 0 0
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a[team=player] 500 10 0 0 0
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ execute @a[team=helper] ~ ~ ~ spawnpoint @s
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ execute @a[team=player] ~ ~ ~ spawnpoint @s
+execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ scoreboard teams join lobby @a
 scoreboard players set @e[tag=gameMaster,score_clearTimer_min=105,score_nextLevel=0] clearTimer 0
 execute @e[tag=gameMaster,score_clearTimer_min=125,score_clearTimer=125,score_nextLevel_min=1] ~ ~ ~ execute @a ~ ~ ~ playsound entity.experience_orb.pickup voice @s
 execute @e[tag=gameMaster,score_clearTimer_min=125,score_clearTimer=125,score_nextLevel_min=1,score_nextLevel=1] ~ ~ ~ function coop:green/marker_move
