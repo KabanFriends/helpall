@@ -4,6 +4,22 @@ effect @a resistance 1000000 255 true
 scoreboard players set @e[tag=gameMaster] players 0
 execute @a ~ ~ ~ scoreboard players add @e[tag=gameMaster] players 1
 
+scoreboard players tag @a[score_leaveCount_min=1] add joined
+scoreboard players reset @a[score_leaveCount_min=1] leaveCount
+
+execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ scoreboard teams join lobby @a[tag=joined]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard teams join player @a[tag=joined]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ tp @a[tag=joined] @e[tag=spawnCopy]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ clear @a[tag=joined]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ gamemode adventure @a[tag=joined]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[tag=joined] slot.hotbar.7 structure_void 1 0 {display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[tag=joined] slot.hotbar.8 barrier 1 0 {display:{Name:"§c§lロビーへ戻る§7 (Fキー)"}}
+execute @e[tag=gameMaster,score_players=1] ~ ~ ~ tp @a[tag=joined] 500 10 0 0 0
+execute @e[tag=gameMaster,score_players_min=2,score_gameType=0] ~ ~ ~ tp @a[tag=joined] 500 10 0 0 0
+execute @e[tag=gameMaster,score_players_min=2,score_gameType=0] ~ ~ ~ execute @a[tag=joined] ~ ~ ~ spawnpoint @s
+execute @e[tag=gameMaster,score_players_min=2,score_gameType=0] ~ ~ ~ clear @a[tag=joined]
+scoreboard players tag @a[tag=joined] remove joined
+
 scoreboard players set @e[tag=gameMaster] totalPlayers 0
 execute @a[team=player] ~ ~ ~ scoreboard players add @e[tag=gameMaster] totalPlayers 1
 scoreboard players set @e[tag=gameMaster] totalHelpers 0
@@ -42,6 +58,22 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=buttontrigger,score_triggered_min=1] ~ ~ ~ detect ~ ~ ~ air -1 setblock ~ ~ ~ redstone_block
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players set @a[tag=notOnButton] onButton 0
 
+execute @e[tag=gameMaster,score_startTimer_min=1] ~ ~ ~ function coop:load_level
+scoreboard players add @e[tag=gameMaster,score_startTimer_min=1] startTimer 1
+
+execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"ヘルパーが退出したので、ステージをやり直します。","color":"red"}]
+execute @e[tag=helperStart] ~ ~ ~ scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] startTimer 1
+execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] ~ ~ ~ clear @a
+execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] ~ ~ ~ execute @a ~ ~ ~ playsound entity.villager.no voice @s
+
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"人数が足りないので、ロビーへ戻ります。","color":"red"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ function coop:remove_level_object
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ tp @a 500 10 0 0 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ execute @a ~ ~ ~ playsound entity.villager.no voice @s
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ execute @a ~ ~ ~ spawnpoint @s
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ clear @a
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ scoreboard teams join player @a
+
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[team=player,score_onGround_min=1] ~ ~ ~ detect ~ ~-0.5 ~ diamond_block -1 execute @a ~ ~ ~ playsound entity.villager.yes voice @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[team=player,score_onGround_min=1] ~ ~ ~ detect ~ ~-0.5 ~ diamond_block -1 particle happyVillager ~ ~ ~ 0 10 0 5 100 force @a
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[team=player,score_onGround_min=1] ~ ~ ~ detect ~ ~-0.5 ~ diamond_block -1 scoreboard players tag @s add needTeleport
@@ -49,10 +81,10 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ tp @a[tag
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_helperOperation=-2] ~ ~ ~ execute @a[tag=needTeleport] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがステージをクリアして"},{"text":"ヘルパー","color":"green"},{"text":"になりました！"},{"text":" (","color":"gray"},{"score":{"name":"@e[tag=gameMaster]","objective":"totalHelpers"},"color":"gray"},{"text":"/","color":"gray"},{"score":{"name":"@e[tag=gameMaster]","objective":"totalOperation"},"color":"gray"},{"text":")","color":"gray"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_helperOperation_min=-1] ~ ~ ~ execute @a[tag=needTeleport] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがステージをクリアしました！"},{"text":" (","color":"gray"},{"score":{"name":"@e[tag=gameMaster]","objective":"totalHelpers"},"color":"gray"},{"text":"/","color":"gray"},{"score":{"name":"@e[tag=gameMaster]","objective":"totalOperation"},"color":"gray"},{"text":")","color":"gray"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_helperOperation_min=-1] ~ ~ ~ execute @a[tag=needTeleport] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がステージをクリアしました！","color":"green","bold":"true"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[tag=needTeleport] ~ ~ ~ spawnpoint @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard teams join helper @a[tag=needTeleport]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players tag @a[tag=needTeleport] remove needTeleport
 
-execute @r[team=helper] ~ ~ ~ scoreboard players set @e[tag=gameMaster,score_helperOperation=-1] clearTimer 0
 execute @r[team=player] ~ ~ ~ scoreboard players set @e[tag=gameMaster,score_helperOperation=-1] clearTimer 0
 scoreboard players add @e[tag=gameMaster,score_clearTimer_min=1] clearTimer 1
 scoreboard players add @e[tag=gameMaster,score_clearTimer=0,score_helperOperation_min=0] clearTimer 1
@@ -68,6 +100,7 @@ execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ exe
 execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ title @a title [{"text":""},{"text":"ステージ クリア！","color":"green","bold":"true"}]
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ scoreboard teams join lobby @a
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a 500 10 0 0 0
+execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ execute @a ~ ~ ~ spawnpoint @s
 scoreboard players set @e[tag=gameMaster,score_clearTimer_min=105,score_nextLevel=0] clearTimer 0
 execute @e[tag=gameMaster,score_clearTimer_min=125,score_clearTimer=125,score_nextLevel_min=1] ~ ~ ~ execute @a ~ ~ ~ playsound entity.experience_orb.pickup voice @s
 execute @e[tag=gameMaster,score_clearTimer_min=125,score_clearTimer=125,score_nextLevel_min=1,score_nextLevel=1] ~ ~ ~ function coop:green/marker_move
@@ -78,9 +111,6 @@ scoreboard players set @e[tag=gameMaster,score_clearTimer_min=125] clearTimer 0
 scoreboard players set @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] gameType 0
 execute @e[tag=gameMaster,score_gameMaster=0,score_clearTimer=0] ~ ~ ~ scoreboard teams join lobby @a
 execute @e[tag=gameMaster,score_gameMaster=0,score_clearTimer_min=105] ~ ~ ~ scoreboard teams join lobby @a
-
-execute @e[tag=gameMaster,score_startTimer_min=1] ~ ~ ~ function coop:load_level
-scoreboard players add @e[tag=gameMaster,score_startTimer_min=1] startTimer 1
 
 scoreboard players set @a holdItem 0
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players set @a holdItem 1 {Inventory:[{Slot:-106b,id:"minecraft:structure_void",tag:{display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}}]}
@@ -106,8 +136,9 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveC
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveCount_min=2] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがロビーへの移動に同意しました。"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がロビーへの移動に同意したので、ロビーへ戻ります。","bold":"true","color":"green"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToLeave
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard teams join lobby @a
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ tp @a 500 10 0 0 0
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ clear @a
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard teams join lobby @a[team=helper]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ tp @a[team=helper] 500 10 0 0 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ clear @a[team=helper]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a[team=helper] ~ ~ ~ spawnpoint @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[score_holdItem_min=1] slot.weapon.offhand air
 scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] gameType 0
