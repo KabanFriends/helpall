@@ -7,6 +7,8 @@ execute @a ~ ~ ~ scoreboard players add @e[tag=gameMaster] players 1
 scoreboard players tag @a[score_leaveCount_min=1] add joined
 scoreboard players reset @a[score_leaveCount_min=1] leaveCount
 
+scoreboard players tag @a[tag=joined] remove wantToLeave
+scoreboard players tag @a[tag=joined] remove wantToRestart
 execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ scoreboard teams join lobby @a[tag=joined]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard teams join player @a[tag=joined]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ tp @a[tag=joined] @e[tag=spawnCopy]
