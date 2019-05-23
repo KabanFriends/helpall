@@ -1,1 +1,1 @@
-scoreboard players tag @e[tag=gameMaster] add redtriggered
+summon armor_stand ~ ~ ~ {Tags:["levelObject","redLever","lever"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}

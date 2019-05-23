@@ -1,3 +1,6 @@
+execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 13 setblock ~ ~2 ~ lever 5
+execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 14 setblock ~ ~2 ~ lever 6
+execute @e[tag=lever] ~ ~ ~ detect ~ ~ ~ command_block -1 blockdata ~ ~ ~ {powered:0b}
 scoreboard players tag @e[tag=gameMaster] remove redtriggered
 scoreboard players tag @e[tag=gameMaster] remove bluetriggered
 scoreboard players tag @e[tag=gameMaster] remove yellowtriggered

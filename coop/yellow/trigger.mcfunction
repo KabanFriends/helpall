@@ -1,1 +1,1 @@
-scoreboard players tag @e[tag=gameMaster] add yellowtriggered
+summon armor_stand ~ ~ ~ {Tags:["levelObject","yellowLever","lever"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}

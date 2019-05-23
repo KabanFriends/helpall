@@ -1,1 +1,1 @@
-scoreboard players tag @e[tag=gameMaster] add greentriggered
+summon armor_stand ~ ~ ~ {Tags:["levelObject","greenLever","lever"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}

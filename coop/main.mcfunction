@@ -41,6 +41,11 @@ scoreboard players set @a onGround 1 {OnGround:true}
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[score_onGround_min=1] ~ ~ ~ detect ~ ~-0.1 ~ barrier -1 effect @s resistance 0
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[score_onGround_min=1] ~ ~ ~ detect ~ ~-0.1 ~ barrier -1 effect @s instant_damage 1 250 true
 
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ 
+scoreboard players set @e[tag=lever] leverPowered 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 13 scoreboard players set @s leverPowered 1
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 14 scoreboard players set @s leverPowered 1
+
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players tag @a add notOnButton
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[score_onGround_min=1] ~ ~ ~ detect ~ ~ ~ stone_pressure_plate 1 scoreboard players tag @s remove notOnButton
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players add @a[tag=!notOnButton,score_onButton=1] onButton 1
@@ -50,6 +55,10 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[score_onButton_min=1,score_onButton=1,score_onGround_min=1] ~ ~ ~ detect ~ ~-0.5 ~ wool 14 summon armor_stand ~ ~1 ~ {Tags:["button","redbutton"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
 execute @e[tag=button] ~ ~ ~ detect ~ ~-1 ~ stone_pressure_plate 0 kill @s
 scoreboard players set @e[tag=buttontrigger] triggered 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=redLever,score_leverPowered_min=1] ~ ~ ~ scoreboard players tag @e[tag=gameMaster] add redtriggered
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=blueLever,score_leverPowered_min=1] ~ ~ ~ scoreboard players tag @e[tag=gameMaster] add bluetriggered
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=greenLever,score_leverPowered_min=1] ~ ~ ~ scoreboard players tag @e[tag=gameMaster] add greentriggered
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=yellowLever,score_leverPowered_min=1] ~ ~ ~ scoreboard players tag @e[tag=gameMaster] add yellowtriggered
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=yellowbutton] ~ ~ ~ scoreboard players set @e[tag=yellowtrigger] triggered 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=yellowtriggered] ~ ~ ~ scoreboard players set @e[tag=yellowtrigger] triggered 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=greenbutton] ~ ~ ~ scoreboard players set @e[tag=greentrigger] triggered 1
@@ -152,3 +161,5 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOpera
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a ~ ~ ~ spawnpoint @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[score_holdItem_min=1] slot.weapon.offhand air
 scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] gameType 0
+
+kill @e[tag=lever,score_leverPowered=0]

@@ -1,1 +1,1 @@
-scoreboard players tag @e[tag=gameMaster] add bluetriggered
+summon armor_stand ~ ~ ~ {Tags:["levelObject","blueLever","lever"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
