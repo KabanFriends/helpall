@@ -11,7 +11,7 @@ scoreboard players tag @a[tag=joined] remove wantToLeave
 scoreboard players tag @a[tag=joined] remove wantToRestart
 execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ scoreboard teams join lobby @a[tag=joined]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard teams join player @a[tag=joined]
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ tp @a[tag=joined] @e[tag=spawnCopy]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ tp @a[tag=joined] @e[tag=levelSpawn]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ clear @a[tag=joined]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ gamemode adventure @a[tag=joined]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[tag=joined] slot.hotbar.7 structure_void 1 0 {display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}
@@ -80,10 +80,10 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboar
 execute @e[tag=gameMaster,score_startTimer_min=1] ~ ~ ~ function coop:load_level
 scoreboard players add @e[tag=gameMaster,score_startTimer_min=1] startTimer 1
 
-execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"ヘルパーが退出したので、ステージをやり直します。","color":"red"}]
-execute @e[tag=helperStart] ~ ~ ~ scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] startTimer 1
-execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] ~ ~ ~ clear @a
-execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=1,score_totalHelpers=0] ~ ~ ~ execute @a ~ ~ ~ playsound entity.villager.no voice @s
+execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=2,score_totalHelpers=0] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"ヘルパーが退出したので、ステージをやり直します。","color":"red"}]
+execute @e[tag=helperStart] ~ ~ ~ scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_players_min=2,score_totalHelpers=0] startTimer 1
+execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=2,score_totalHelpers=0] ~ ~ ~ clear @a
+execute @e[tag=helperStart] ~ ~ ~ execute @e[tag=gameMaster,score_gameType_min=1,score_players_min=2,score_totalHelpers=0] ~ ~ ~ execute @a ~ ~ ~ playsound entity.villager.no voice @s
 
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"人数が足りないので、ロビーへ戻ります。","color":"red"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ function coop:remove_level_object
@@ -91,7 +91,8 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ execute @a ~ ~ ~ playsound entity.villager.no voice @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ execute @a ~ ~ ~ spawnpoint @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ clear @a
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ scoreboard teams join player @a
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] ~ ~ ~ scoreboard teams join lobby @a
+scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_players=1] gameType 0
 
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[team=player,score_onGround_min=1] ~ ~ ~ detect ~ ~-0.5 ~ diamond_block -1 execute @a ~ ~ ~ playsound entity.villager.yes voice @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[team=player,score_onGround_min=1] ~ ~ ~ detect ~ ~-0.5 ~ diamond_block -1 particle happyVillager ~ ~ ~ 0 10 0 5 100 force @a
