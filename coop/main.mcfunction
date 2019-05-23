@@ -104,6 +104,8 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_helperOper
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_helperOperation_min=-1] ~ ~ ~ execute @a[tag=needTeleport] ~ ~ ~ summon fireworks_rocket ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Flicker:1,Trail:1,Colors:[I;16776960],FadeColors:[I;16761600]},{Type:4,Trail:1,Colors:[I;16759552],FadeColors:[I;16744448]}]}}},Attributes:[{Name:generic.attackDamage,Base:404}]}
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_helperOperation_min=-1,score_players_min=3] ~ ~ ~ execute @a[tag=needTeleport] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がステージをクリアしました！","color":"green","bold":"true"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[tag=needTeleport] ~ ~ ~ spawnpoint @s
+clear @a[tag=needTeleport]
+
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard teams join helper @a[tag=needTeleport]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players tag @a[tag=needTeleport] remove needTeleport
 
@@ -148,6 +150,7 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantRestar
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantRestartCount_min=1,score_wantRestartCount=1] ~ ~ ~ execute @a[score_holdItem_min=1,score_holdItem=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがステージをやり直そうとしています。 やり直したい人は、「"},{"text":"ステージをやり直す","color":"dark_aqua"},{"text":"」のアイテムを使用してください。"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantRestartCount_min=2] ~ ~ ~ execute @a[score_holdItem_min=1,score_holdItem=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがステージのやり直しに同意しました。"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_restartOperation_min=0] ~ ~ ~ execute @a[score_holdItem_min=1,score_holdItem=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がステージのやり直しに同意したので、ステージをやり直します。","bold":"true","color":"green"}]
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_restartOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToLeave
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_restartOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToRestart
 scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_restartOperation_min=0] startTimer 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players tag @a[score_holdItem_min=2,score_holdItem=2] add wantToLeave
@@ -160,6 +163,7 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveC
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveCount_min=2] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがロビーへの移動に同意しました。"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がロビーへの移動に同意したので、ロビーへ戻ります。","bold":"true","color":"green"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToLeave
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToRestart
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ function coop:remove_level_object
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard teams join lobby @a
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ tp @a 500 10 0 0 0
@@ -169,3 +173,12 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceit
 scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] gameType 0
 
 kill @e[tag=lever,score_leverPowered=0]
+
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[team=player,tag=!wantToRestart] slot.hotbar.7 structure_void 1 0 {display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[team=helper,tag=!wantToRestart] slot.hotbar.7 structure_void 1 0 {display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[team=player,tag=!wantToLeave] slot.hotbar.8 barrier 1 0 {display:{Name:"§c§lロビーへ戻る§7 (Fキー)"}}
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[team=helper,tag=!wantToLeave] slot.hotbar.8 barrier 1 0 {display:{Name:"§c§lロビーへ戻る§7 (Fキー)"}}
+
+scoreboard players set @e[type=item] itemType 1 {Item:{id:"minecraft:structure_void",tag:{display:{Name:"§3§lステージをやり直す§7 (Fキー)"}}}}
+scoreboard players set @e[type=item] itemType 2 {Item:{id:"minecraft:barrier",tag:{display:{Name:"§c§lロビーへ戻る§7 (Fキー)"}}}}
+kill @e[type=item,score_itemType_min=1]
