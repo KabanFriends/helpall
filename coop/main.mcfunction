@@ -99,8 +99,10 @@ execute @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] ~ ~ ~ funct
 execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ execute @a ~ ~ ~ playsound ui.toast.challenge_complete voice @s ~ ~ ~ 20 1.9
 execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ title @a title [{"text":""},{"text":"ステージ クリア！","color":"green","bold":"true"}]
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ scoreboard teams join lobby @a
-execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a 500 10 0 0 0
-execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ execute @a ~ ~ ~ spawnpoint @s
+execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a[team=helper] 500 10 0 0 0
+execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a[team=player] 500 10 0 0 0
+execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ execute @a[team=helper] ~ ~ ~ spawnpoint @s
+execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ execute @a[team=player] ~ ~ ~ spawnpoint @s
 scoreboard players set @e[tag=gameMaster,score_clearTimer_min=105,score_nextLevel=0] clearTimer 0
 execute @e[tag=gameMaster,score_clearTimer_min=125,score_clearTimer=125,score_nextLevel_min=1] ~ ~ ~ execute @a ~ ~ ~ playsound entity.experience_orb.pickup voice @s
 execute @e[tag=gameMaster,score_clearTimer_min=125,score_clearTimer=125,score_nextLevel_min=1,score_nextLevel=1] ~ ~ ~ function coop:green/marker_move
@@ -136,9 +138,9 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveC
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_wantLeaveCount_min=2] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"selector":"@s","bold":"true"},{"text":"さんがロビーへの移動に同意しました。"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a[score_holdItem_min=2,score_holdItem=2] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"全員がロビーへの移動に同意したので、ロビーへ戻ります。","bold":"true","color":"green"}]
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard players tag @a remove wantToLeave
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard teams join lobby @a[team=helper]
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ tp @a[team=helper] 500 10 0 0 0
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ clear @a[team=helper]
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a[team=helper] ~ ~ ~ spawnpoint @s
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ scoreboard teams join lobby @a
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ tp @a 500 10 0 0 0
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ clear @a
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] ~ ~ ~ execute @a ~ ~ ~ spawnpoint @s
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ replaceitem entity @a[score_holdItem_min=1] slot.weapon.offhand air
 scoreboard players set @e[tag=gameMaster,score_gameType_min=1,score_gameType=1,score_leaveOperation_min=0] gameType 0
