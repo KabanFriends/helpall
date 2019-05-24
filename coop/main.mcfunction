@@ -111,7 +111,7 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboar
 
 execute @r[team=player] ~ ~ ~ scoreboard players set @e[tag=gameMaster,score_helperOperation=-1] clearTimer 0
 scoreboard players add @e[tag=gameMaster,score_clearTimer_min=1] clearTimer 1
-scoreboard players add @e[tag=gameMaster,score_clearTimer=0,score_helperOperation_min=0] clearTimer 1
+scoreboard players add @e[tag=gameMaster,score_clearTimer=0,score_helperOperation_min=0,score_players_min=2] clearTimer 1
 scoreboard players set @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] nextLevel 0
 execute @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] ~ ~ ~ execute @e[tag=greenLevel] ~ ~ ~ detect ~-2 ~ ~-15 air -1 scoreboard players set @e[tag=gameMaster] nextLevel 1
 execute @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] ~ ~ ~ execute @e[tag=blueLevel] ~ ~ ~ detect ~-2 ~ ~-15 air -1 scoreboard players set @e[tag=gameMaster] nextLevel 2
@@ -122,6 +122,7 @@ execute @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] ~ ~ ~ clear
 execute @e[tag=gameMaster,score_clearTimer_min=1,score_clearTimer=1] ~ ~ ~ function coop:remove_level_object
 execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ execute @a ~ ~ ~ playsound ui.toast.challenge_complete voice @s ~ ~ ~ 20 1.9
 execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ title @a title [{"text":""},{"text":"ステージ クリア！","color":"green","bold":"true"}]
+execute @e[tag=gameMaster,score_clearTimer_min=20,score_clearTimer=20] ~ ~ ~ title @a subtitle [{"text":""}]
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a[team=helper] 500 10 0 0 0
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ tp @a[team=player] 500 10 0 0 0
 execute @e[tag=gameMaster,score_clearTimer_min=105,score_clearTimer=105] ~ ~ ~ execute @a[team=helper] ~ ~ ~ spawnpoint @s
