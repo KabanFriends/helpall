@@ -5,7 +5,7 @@ execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ score
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard teams join helper @r
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard teams option helper color light_purple
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ tellraw @a [{"text":""},{"text":"!","bold":"true","color":"yellow"},{"text":"» ","color":"dark_gray"},{"text":"このステージの最初の"},{"text":"ヘルパー","color":"green"},{"text":"は "},{"selector":"@a[team=helper]","bold":"true"},{"text":"さんです！"}]
-execute @e[tag=gameMaster,score_currentLevel_min=1,score_currentLevel=1,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard teams option helper color green
+execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ scoreboard teams option helper color green
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ title @a times 8 10 60
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ clear @a
 execute @e[tag=gameMaster,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ gamemode adventure @a
@@ -23,6 +23,15 @@ execute @e[tag=gameMaster,score_currentLevel_min=1,score_currentLevel=1,score_st
 execute @e[tag=gameMaster,score_currentLevel_min=1,score_currentLevel=1,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ title @a subtitle [{"text":""},{"text":"コース1","color":"gray"}]
 execute @e[tag=gameMaster,score_currentLevel_min=1,score_currentLevel=1,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ summon armor_stand 1012 11 35 {Tags:["helperStart","levelObject"],Rotation:[180f,0.0f],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
 execute @e[tag=gameMaster,score_currentLevel_min=1,score_currentLevel=1,score_startTimer_min=11,score_startTimer=11] ~ ~ ~ scoreboard players tag @e[tag=levelSpawn] add greenLevel
+
+
+#LEVEL 2 START
+execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ tp @a 1050 17 12 0 0
+execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ tp @a[team=helper] 1058 14 12 0 0
+execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ title @a title [{"text":""},{"text":"ステージ2","color":"green","bold":"true"}]
+execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ title @a subtitle [{"text":""},{"text":"コース1","color":"gray"}]
+execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ summon armor_stand 1058 14 48 {Tags:["helperStart","levelObject"],Rotation:[180f,0.0f],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
+execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_startTimer_min=11,score_startTimer=11] ~ ~ ~ scoreboard players tag @e[tag=levelSpawn] add greenLevel
 
 
 

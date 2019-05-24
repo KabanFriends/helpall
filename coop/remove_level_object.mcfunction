@@ -9,3 +9,5 @@ execute @e[tag=buttontrigger] ~ ~ ~ detect ~ ~ ~ redstone_block -1 setblock ~ ~ 
 kill @e[tag=buttontrigger]
 kill @e[tag=levelObject]
 gamerule doTileDrops false
+gamerule doFireTick false
+gamerule doMobLoot false
