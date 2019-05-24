@@ -22,6 +22,8 @@ execute @e[tag=gameMaster,score_players_min=2,score_gameType=0] ~ ~ ~ execute @a
 execute @e[tag=gameMaster,score_players_min=2,score_gameType=0] ~ ~ ~ clear @a[tag=joined]
 scoreboard players tag @a[tag=joined] remove joined
 
+execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ kill @e[tag=lever]
+
 scoreboard players set @e[tag=gameMaster] totalPlayers 0
 execute @a[team=player] ~ ~ ~ scoreboard players add @e[tag=gameMaster] totalPlayers 1
 scoreboard players set @e[tag=gameMaster] totalHelpers 0

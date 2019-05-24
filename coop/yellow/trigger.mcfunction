@@ -1,1 +1,1 @@
-execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ summon armor_stand ~ ~ ~ {Tags:["levelObject","yellowLever","lever"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
+summon armor_stand ~ ~ ~ {Tags:["levelObject","yellowLever","lever"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
