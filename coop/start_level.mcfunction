@@ -34,6 +34,15 @@ execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_st
 execute @e[tag=gameMaster,score_currentLevel_min=2,score_currentLevel=2,score_startTimer_min=11,score_startTimer=11] ~ ~ ~ scoreboard players tag @e[tag=levelSpawn] add greenLevel
 
 
+#LEVEL 3 START
+execute @e[tag=gameMaster,score_currentLevel_min=3,score_currentLevel=3,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ tp @a 1100 10 12 0 0
+execute @e[tag=gameMaster,score_currentLevel_min=3,score_currentLevel=3,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ tp @a[team=helper] 1120 10 12 0 0
+execute @e[tag=gameMaster,score_currentLevel_min=3,score_currentLevel=3,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ title @a title [{"text":""},{"text":"ステージ3","color":"green","bold":"true"}]
+execute @e[tag=gameMaster,score_currentLevel_min=3,score_currentLevel=3,score_startTimer_min=1,score_startTimer=1] ~ ~ ~ title @a subtitle [{"text":""},{"text":"コース1","color":"gray"}]
+execute @e[tag=gameMaster,score_currentLevel_min=3,score_currentLevel=3,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ summon armor_stand 1120 10 41 {Tags:["helperStart","levelObject"],Rotation:[180f,0.0f],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
+execute @e[tag=gameMaster,score_currentLevel_min=3,score_currentLevel=3,score_startTimer_min=11,score_startTimer=11] ~ ~ ~ scoreboard players tag @e[tag=levelSpawn] add greenLevel
+
+
 
 
 
@@ -51,6 +60,8 @@ execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ exe
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ setblock ~2 ~-1 ~-15 wool 11
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ setblock ~4 ~-1 ~-15 wool 4
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ setblock ~6 ~-1 ~-15 wool 5
+execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ detect ~8 ~-1 ~-15 air -1 setblock ~8 ~-1 ~-15 repeating_command_block 1 0 {auto:0b}
+execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ blockdata ~8 ~-1 ~-15 {auto:1b}
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ summon armor_stand ~ ~ ~-15 {Tags:["buttontrigger","redtrigger"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ summon armor_stand ~2 ~ ~-15 {Tags:["buttontrigger","bluetrigger"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}
 execute @e[tag=gameMaster,score_startTimer_min=10,score_startTimer=10] ~ ~ ~ execute @e[tag=levelSpawn] ~ ~ ~ summon armor_stand ~4 ~ ~-15 {Tags:["buttontrigger","yellowtrigger"],Invisible:true,Invulnerable:true,Marker:true,NoGravity:true}

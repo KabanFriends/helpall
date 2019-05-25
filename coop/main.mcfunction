@@ -22,8 +22,6 @@ execute @e[tag=gameMaster,score_players_min=2,score_gameType=0] ~ ~ ~ execute @a
 execute @e[tag=gameMaster,score_players_min=2,score_gameType=0] ~ ~ ~ clear @a[tag=joined]
 scoreboard players tag @a[tag=joined] remove joined
 
-execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ kill @e[tag=lever]
-
 scoreboard players set @e[tag=gameMaster] totalPlayers 0
 execute @a[team=player] ~ ~ ~ scoreboard players add @e[tag=gameMaster] totalPlayers 1
 scoreboard players set @e[tag=gameMaster] totalHelpers 0
@@ -49,6 +47,11 @@ execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~
 scoreboard players set @e[tag=lever] leverPowered 0
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 13 scoreboard players set @s leverPowered 1
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 14 scoreboard players set @s leverPowered 1
+execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 13 scoreboard players set @s leverPowered 1
+execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 13 setblock ~ ~2 ~ lever 5
+execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ execute @e[tag=lever] ~ ~ ~ detect ~ ~2 ~ lever 14 setblock ~ ~2 ~ lever 6
+
+execute @e[tag=gameMaster,score_gameType=0] ~ ~ ~ kill @e[tag=lever]
 
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ scoreboard players tag @a add notOnButton
 execute @e[tag=gameMaster,score_gameType_min=1,score_gameType=1] ~ ~ ~ execute @a[score_onGround_min=1] ~ ~ ~ detect ~ ~ ~ stone_pressure_plate 1 scoreboard players tag @s remove notOnButton
