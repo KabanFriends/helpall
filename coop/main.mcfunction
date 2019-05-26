@@ -1,5 +1,5 @@
 effect @a saturation 1000000 255 true
-effect @a resistance 1000000 255 true
+effect @a[team=lobby] resistance 1000000 255 true
 
 scoreboard players set @e[tag=gameMaster] players 0
 execute @a ~ ~ ~ scoreboard players add @e[tag=gameMaster] players 1
